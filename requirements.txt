@@ -1,0 +1,6 @@
+dbt-bigquery
+dbt-fal[bigquery]
+fal
+jupyter
+scikit-learn
+matplotlib
