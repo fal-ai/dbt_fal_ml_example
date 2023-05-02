@@ -2,16 +2,13 @@ import pickle
 import uuid
 import pandas as pd
 import datetime
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
 
-def model(dbt, fal):
-    dbt.config(materialized="table")
-    orders_df = dbt.ref("customer_orders_labeled")
-    X = orders_df[['age', 'total_price']]
-    y = orders_df['return']
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=123)
+
+def train_ml_model(features: pd.DataFrame, labels:pd.DataFrame):
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.model_selection import train_test_split
+    from sklearn.metrics import classification_report
+    X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.3, random_state=123)
 
     print("Model init")
     lr_model = LogisticRegression(random_state=123)
@@ -39,3 +36,12 @@ def model(dbt, fal):
         pickle.dump(lr_model, f)
 
     return output_df
+
+
+def model(dbt, fal):
+    dbt.config(materialized="table")
+    orders_df = dbt.ref("customer_orders_labeled")
+    X = orders_df[['age', 'total_price']]
+    y = orders_df['return']
+
+    return train_ml_model(X, y)
