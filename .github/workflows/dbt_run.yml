@@ -23,7 +23,7 @@ jobs:
           python -m venv .venv
           source .venv/bin/activate
           pip install --upgrade pip
-          pip install -r requirements.prod.txt
+          pip install dbt-redshift==1.4 dbt-fal[redshift]==1.4 scikit-learn
 
       - name: Run dbt
         env:
