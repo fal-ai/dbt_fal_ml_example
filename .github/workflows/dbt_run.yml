@@ -1,0 +1,38 @@
+name: Run dbt
+
+on:
+  pull_request:
+    types: [assigned, opened, synchronize, reopened]
+
+  push:
+    branches: [main]
+
+  # schedule:
+  #   # every midnight
+  #   - cron: "0 0 * * *"
+
+  workflow_dispatch:
+
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup dependencies
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.prod.txt
+
+      - name: Run dbt
+        env:
+          RS_HOST: ${{ secrets.RS_HOST }}
+          RS_USER: ${{ secrets.RS_USER }}
+          RS_PASSWORD: ${{ secrets.RS_PASSWORD }}
+          RS_DBNAME: ${{ secrets.RS_DBNAME }}
+          RS_SCHEMA: ${{ secrets.RS_SCHEMA }}
+        run: |
+          source .venv/bin/activate
+
+          dbt run --profiles-dir . --target prod
