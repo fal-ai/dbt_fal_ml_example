@@ -18,12 +18,14 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+
       - name: Setup dependencies
         run: |
           python -m venv .venv
           source .venv/bin/activate
           pip install --upgrade pip
-          pip install dbt-redshift==1.4 dbt-fal[redshift]==1.4 scikit-learn
+          pip install -r requirements.prod.txt
 
       - name: Run dbt
         env:
