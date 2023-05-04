@@ -36,5 +36,6 @@ jobs:
           RS_SCHEMA: ${{ secrets.RS_SCHEMA }}
         run: |
           source .venv/bin/activate
+          dbt seed --profiles-dir . --target prod
 
           dbt run --profiles-dir . --target prod
