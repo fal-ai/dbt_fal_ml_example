@@ -1,6 +1,7 @@
 import pickle
 import pandas as pd
 
+
 def make_predictions(models_df: pd.DataFrame, orders_df: pd.DataFrame) -> pd.DataFrame:
     best_model_name = models_df[models_df.accuracy == models_df.accuracy.max()].model_name[0]
     with open(f"ml_models/{best_model_name}.pkl", "rb") as f:
