@@ -3,6 +3,12 @@ import pandas as pd
 import datetime
 
 
+def convert_dict_to_str(val):
+    if isinstance(val, dict):
+        return str(val)
+    return val
+
+
 def train_ml_model(features: pd.DataFrame, labels: pd.DataFrame):
     from sklearn.linear_model import LogisticRegression
     from sklearn.model_selection import train_test_split
@@ -30,6 +36,8 @@ def train_ml_model(features: pd.DataFrame, labels: pd.DataFrame):
     output_df = pd.DataFrame([report])
     output_df = output_df.rename(columns={"0.0": "target_0", "1.0": "target_1"})
     output_df.set_index("model_name")
+
+    output_df = output_df.applymap(convert_dict_to_str)
 
     print("Saving the model")
     # Save model weights
