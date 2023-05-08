@@ -1,6 +1,7 @@
 dbt-postgres==1.4.6
 dbt-fal[postgres]==1.4.8
 fal
+fal-serverless
 jupyter
 scikit-learn
 matplotlib

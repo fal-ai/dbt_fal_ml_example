@@ -1,3 +1,4 @@
 dbt-redshift==1.4
 dbt-fal[redshift]==1.4.8
+fal-serverless
 scikit-learn
