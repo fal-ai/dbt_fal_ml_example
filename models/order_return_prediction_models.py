@@ -1,6 +1,10 @@
 import uuid
 import pandas as pd
 import datetime
+import os
+from fal_serverless import isolated
+
+ML_MODELS_HOME = os.environ["ML_MODELS_HOME"]
 
 
 def convert_dict_to_str(val):
@@ -9,6 +13,7 @@ def convert_dict_to_str(val):
     return val
 
 
+@isolated(requirements=["scikit-learn", "dbt-fal"], machine_type="M")
 def train_ml_model(features: pd.DataFrame, labels: pd.DataFrame):
     from sklearn.linear_model import LogisticRegression
     from sklearn.model_selection import train_test_split
@@ -41,7 +46,7 @@ def train_ml_model(features: pd.DataFrame, labels: pd.DataFrame):
 
     print("Saving the model")
     # Save model weights
-    with open(f"ml_models/{model_name}.pkl", "wb") as f:
+    with open(f"{ML_MODELS_HOME}/{model_name}.pkl", "wb") as f:
         pickle.dump(lr_model, f)
 
     return output_df
@@ -52,5 +57,4 @@ def model(dbt, fal):
     orders_df = dbt.ref("customer_orders_labeled")
     X = orders_df[['age', 'total_price']]
     y = orders_df['return']
-    result = train_ml_model(X, y)
-    return result
+    return train_ml_model(X, y)

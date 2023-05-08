@@ -34,4 +34,3 @@ example_shop:
       keepalives_idle: 240 # default 240 seconds
       connect_timeout: 20 # default 10 seconds
       ra3_node: false
-

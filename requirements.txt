@@ -1,5 +1,5 @@
-dbt-bigquery
-dbt-fal[bigquery]
+dbt-postgres==1.4.6
+dbt-fal[postgres]==1.4.8
 fal
 jupyter
 scikit-learn
