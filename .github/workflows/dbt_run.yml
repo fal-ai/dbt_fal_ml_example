@@ -34,6 +34,8 @@ jobs:
           RS_PASSWORD: ${{ secrets.RS_PASSWORD }}
           RS_DBNAME: ${{ secrets.RS_DBNAME }}
           RS_SCHEMA: ${{ secrets.RS_SCHEMA }}
+          FAL_KEY_ID: ${{ secrets.FAL_KEY_ID }}
+          FAL_KEY_SECRET: ${{ secrets.FAL_KEY_SECRET }}
           ML_MODELS_HOME: "/data/ml_models"
         run: |
           source .venv/bin/activate
