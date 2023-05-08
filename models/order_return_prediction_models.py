@@ -45,7 +45,11 @@ def train_ml_model(features: pd.DataFrame, labels: pd.DataFrame):
     output_df = output_df.applymap(convert_dict_to_str)
 
     print("Saving the model")
+
     # Save model weights
+    if not os.path.exists(ML_MODELS_HOME):
+        os.makedirs(ML_MODELS_HOME)
+
     with open(f"{ML_MODELS_HOME}/{model_name}.pkl", "wb") as f:
         pickle.dump(lr_model, f)
 
